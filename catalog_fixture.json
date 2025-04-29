@@ -1,0 +1,49 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+        "name_category": "Категория 1",
+        "description": null
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "created_at": "2025-04-24T21:00:00Z",
+        "name": "samsung",
+        "description": "Что то",
+        "image": "/test_ima.png",
+        "category": 4,
+        "price": 123,
+        "updated_at": "2025-04-25T12:37:36.430Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "created_at": "2025-04-24T21:00:00Z",
+        "name": "ifon",
+        "description": "Что то",
+        "image": "/test_ima.png",
+        "category": 4,
+        "price": 321,
+        "updated_at": "2025-04-25T12:37:36.432Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "created_at": "2025-04-24T21:00:00Z",
+        "name": "pirat",
+        "description": "Что то",
+        "image": "/test_ima.png",
+        "category": 4,
+        "price": 231,
+        "updated_at": "2025-04-25T12:37:36.433Z"
+    }
+}
+]
