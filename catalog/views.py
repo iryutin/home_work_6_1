@@ -1,14 +1,19 @@
+
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from catalog.models import Product
+
 
 def home(request):
-    return render(request, "home.html")
+    products = Product.objects.all()
+    context = {'products': products}
+    return render(request, "home.html", context)
 
-
-# def contacts(request):
-# return render(request, 'contacts.html')
-
+def product_info(requst, pk):
+    product = Product.objects.get(id=pk)
+    context = {'product': product}
+    return render(requst, "product_info.html", context)
 
 def contacts(request):
     if request.method == "POST":
