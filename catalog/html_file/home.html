@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
+{% block title %} Главная {% endblock %}
 {% block content %}
-<h1 class="text-center">Главная</h1>
-<p class="text-center"> Вы находитесь на сайте для продажи товаров </p>
+{% include 'header.html' %}
 <div class="row row-cols-2 row-cols-md-2 g-4">
   {% for product in products %}
   <div class="col">
