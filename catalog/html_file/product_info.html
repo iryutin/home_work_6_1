@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load my_tags %}
 {% block content %}
 <h1 class="text-center">Подробная информация</h1>
 <p class="text-center"> Вы находитесь на сайте для продажи товаров </p>
@@ -6,9 +7,11 @@
   <div class="card text-center mb-3">
     <div class="card-header">{{product.name}}</div>
     <div class="card-body">
-      <img src="{{product.name}}" class="card-img-top" alt="т">
+      <img src = "{{product.image | media_filter }}">
       <h5 class="card-title">{{product.price}}</h5>
       <p class="card-text">{{product.description}}</p>
+      <p class="card-text">Дата создания {{product.created_at}}</p>
+      <p class="card-text">Дата последнего изменения {{product.updated_at}}</p>
       <a href="#" class="btn btn-primary">Добавить в корзину</a>
     </div>
   </div>

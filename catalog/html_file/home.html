@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
+{% load my_tags %}
 {% block title %} Главная {% endblock %}
 {% block content %}
 {% include 'header.html' %}
-<div class="row row-cols-2 row-cols-md-2 g-4">
-  {% for product in products %}
-  <div class="col">
-    <div class="card">
-      <img src = {{product.image}} class="card-img-top" alt="product.name">
-      <div class="card-body">
-        <h5 class="card-title">{{product.name}}</h5>
-        <p class="card-text">{{product.description|truncatechars:100|default:"Описание отсутствует"}}</p>
-        <a href="product_info/{{product.id}}" class="btn btn-primary">Полная информация</a>
+<div class="album py-5 bg-body-tertiary">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for product in products %}
+    <div class="col">
+      <div class="card w-75" >
+        <img src = "{{product.image | media_filter }}" class="card-img-top" alt={{product.name}} height = 300>
+        <div class="card-body">
+          <h5 class="card-title">{{product.name}}</h5>
+          <p class="card-text">{{product.description|truncatechars:100|default:"Описание отсутствует"}}</p>
+          <a href="product_info/{{product.id}}" class="btn btn-primary">Полная информация</a>
+        </div>
       </div>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
 {% endblock %}
