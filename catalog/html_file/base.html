@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Заголовок страницы</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  </head>
+
+    <body>
+    <!-- Начало бокового меню -->
+      <div class="offcanvas offcanvas-start show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" style="background-color: black; padding: 20px; color: white ">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasLabel">Меню</h5>
+        </div>
+        <div class="offcanvas-body">
+          <ul>
+            <li><a href="{% url 'catalog:catalog' %}">Главная</a></li>
+            <li><a href="catalog.html">Категории</a></li>
+            <li><a href="orders.html">Заказы</a></li>
+            <li><a href="contacts/">Контакты</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="btn-group dropup">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropup
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'catalog:catalog' %}">Главная</a></li>
+              <li><a href="catalog.html">Категории</a></li>
+              <li><a href="orders.html">Заказы</a></li>
+              <li><a href="contacts/">Контакты</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <!-- Основная часть страницы -->
+      <div class="content">
+        <!-- Кнопка на бокового меню -->
+        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvas">
+          Меню
+        </a>
+        {% block content %}{% endblock %}
+     </div>
+  </body>
+</html>
