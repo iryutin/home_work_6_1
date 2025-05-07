@@ -5,7 +5,7 @@ class Post(models.Model):
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='post')
     created_at = models.DateTimeField(auto_created=True, auto_now=True)
-    publication_attribute = models.BinaryField()
+    publication = models.BooleanField(default=True)
     views = models.PositiveIntegerField(default=0)
 
     class Meta:
