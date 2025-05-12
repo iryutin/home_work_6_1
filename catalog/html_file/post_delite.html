@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %} Форма публикации {% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="container text-bg-primary mb-3" data-bs-theme="blue">
+  <h1 class="mb-4">Удалить пост? "{{post.name}}"</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit " class="btn btn-danger">Удалить</button>
+    <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Отмена</a>
+  </form>
+</div>
+{% endblock %}

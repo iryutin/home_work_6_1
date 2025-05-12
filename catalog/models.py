@@ -19,7 +19,7 @@ class Product(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to='product')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.IntegerField()
-    created_at = models.DateTimeField(auto_created=True)
+    created_at = models.DateTimeField(auto_created=True, auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

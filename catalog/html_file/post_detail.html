@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %} Форма публикации {% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<h1 class="text-center">Подробная информация</h1>
+<p class="text-center"> Вы находитесь на сайте для продажи товаров </p>
+<div class="col">
+  <div class="card text-center mb-3">
+    <div class="card-header">{{post.name}}</div>
+    <div class="card-body">
+      <img src = "{{post.image | media_filter }}">
+      <p class="card-text">{{post.description}}</p>
+      <p class="card-text">Дата создания {{post.created_at}}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

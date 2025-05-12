@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %} Форма публикации {% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="container mt-5">
+        <h1 class="mb-4">Список объектов POST</h1>
+        <a href="{% url 'blog:post_create' %}" class="btn btn-primary mb-3">Создать новый объект</a>
+        <ul class="list-group">
+            {% for post in posts %}
+                <li class="list-group-item">
+                    <a href="{% url 'blog:post_detail' post.pk %}">{{post.name}}</a>
+                    <a href="{% url 'blog:post_update' post.pk %}" class="btn btn-sm btn-secondary ml-3">Редактировать</a>
+                    <a href="{% url 'blog:post_delite' post.pk %}" class="btn btn-sm btn-danger ml-1">Удалить</a>
+                    <p>{{post.views}} просмотров</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

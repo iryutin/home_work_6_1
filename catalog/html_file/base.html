@@ -16,8 +16,8 @@
         </div>
         <div class="offcanvas-body">
           <ul>
-            <li><a href="{% url 'catalog:catalog' %}">Главная</a></li>
-            <li><a href="catalog.html">Категории</a></li>
+            <li><a href="{% url 'catalog:home' %}">Главная</a></li>
+            <li><a href="{% url 'blog:post_list' %}">Посты</a></li>
             <li><a href="orders.html">Заказы</a></li>
             <li><a href="contacts/">Контакты</a></li>
           </ul>
@@ -28,7 +28,7 @@
               Dropup
             </button>
             <ul class="dropdown-menu">
-              <li><a href="{% url 'catalog:catalog' %}">Главная</a></li>
+              <li><a href="{% url 'catalog:home' %}">Главная</a></li>
               <li><a href="catalog.html">Категории</a></li>
               <li><a href="orders.html">Заказы</a></li>
               <li><a href="contacts/">Контакты</a></li>

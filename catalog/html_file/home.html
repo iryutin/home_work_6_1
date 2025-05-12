@@ -3,6 +3,7 @@
 {% block title %} Главная {% endblock %}
 {% block content %}
 {% include 'header.html' %}
+<a href="{% url 'catalog:product_create' %}" class="btn btn-primary mb-3">Создать новый объект</a>
 <div class="album py-5 bg-body-tertiary">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     {% for product in products %}
@@ -12,7 +13,9 @@
         <div class="card-body">
           <h5 class="card-title">{{product.name}}</h5>
           <p class="card-text">{{product.description|truncatechars:100|default:"Описание отсутствует"}}</p>
-          <a href="product_info/{{product.id}}" class="btn btn-primary">Полная информация</a>
+          <a href="{% url 'catalog:product_info' product.pk %}" class="btn btn-primary">Полная информация</a>
+          <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-sm btn-secondary ml-3">Редактировать</a>
+          <a href="{% url 'catalog:product_delite' product.pk %}" class="btn btn-sm btn-danger ml-1">Удалить</a>
         </div>
       </div>
     </div>
