@@ -13,9 +13,13 @@
         <div class="card-body">
           <h5 class="card-title">{{product.name}}</h5>
           <p class="card-text">{{product.description|truncatechars:100|default:"Описание отсутствует"}}</p>
+          {% if user.is_authenticated %}
           <a href="{% url 'catalog:product_info' product.pk %}" class="btn btn-primary">Полная информация</a>
           <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-sm btn-secondary ml-3">Редактировать</a>
           <a href="{% url 'catalog:product_delite' product.pk %}" class="btn btn-sm btn-danger ml-1">Удалить</a>
+          {% else %}
+          <p>Пожалуйста, зарегестрируетесь</p>
+          {% endif %}
         </div>
       </div>
     </div>

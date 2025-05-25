@@ -18,6 +18,15 @@
           <ul>
             <li><a href="{% url 'catalog:home' %}">Главная</a></li>
             <li><a href="{% url 'blog:post_list' %}">Посты</a></li>
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'user:logout' %}" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-link nav-link">Выйти</button>
+            </form>
+            {% else %}
+            <li><a href="{% url 'user:login'%}">Логин</a></li>
+            <li><a href="{% url 'user:register'%}">Регистрация</a></li>
+            {% endif %}
             <li><a href="orders.html">Заказы</a></li>
             <li><a href="contacts/">Контакты</a></li>
           </ul>
