@@ -6,7 +6,7 @@ import os
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'image', 'category', 'price']
+        fields = ['name', 'description', 'image', 'category', 'price', 'status']
 
     def clean(self):
         ban_words = ['казино', 'биржа', 'обман', 'криптовалюта', 'дешево', 'полиция', 'крипта', 'бесплатно', 'радар']
@@ -45,7 +45,14 @@ class ProductForm(forms.ModelForm):
         return image
 
     def __init__(self, *args, **kwargs):
-        super(ProductForm, self).__init__(*args, **kwargs)
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if self.user and not self.user.is_superuser:
+            # Ограничиваем выбор статуса для обычных пользователей
+            self.fields['status'].choices = [
+                ('draft', 'Черновик'),
+                ('moderation', 'На модерации'),
+            ]
 
         self.fields['name'].widget.attrs.update({
             'class': 'form-control',  # Добавление CSS-класса для стилизации поля
