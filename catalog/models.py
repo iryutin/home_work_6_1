@@ -34,6 +34,7 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Владелец',
         related_name='products',
+        blank=True, null=True
     )
     name = models.CharField(max_length=150, verbose_name="Имя_продукта")
     description = models.TextField(blank=True, null=True)

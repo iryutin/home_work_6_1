@@ -15,12 +15,12 @@
       <p class="card-text">Дата создания {{product.created_at}}</p>
       <p class="card-text">Дата последнего изменения {{product.updated_at}}</p>
       <a href="#" class="btn btn-primary">Добавить в корзину</a>
-      {% if user.has_perm 'catalog.can_unpublish_product' and product.status != 'draft' %}
+      {% if perm.catalog.can_unpublish_product and product.status != 'draft' %}
       <form method="post" action="{% url 'catalog:product_unpublish' product.pk %}" style="display: inline;">
         {% csrf_token %}
         <button type="submit" class="btn btn-warning">Снять с публикации</button>
       </form>
-      {% if user.has_perm 'catalog.delete_product or user == product.owner' %}
+      {% if perms.catalog.can_delete_any_product or user == product.owner %}
                 <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
             {% endif %}
       {% endif %}
