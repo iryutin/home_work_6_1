@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import UserModel
 
-# Register your models here.
+
+@admin.register(UserModel)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ("id", "email", "phone_namber", "country")
+    list_filter = ("email",)
+    search_fields = ("email", "country")

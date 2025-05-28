@@ -9,6 +9,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "price", "category")
-    list_filter = ("category",)
-    search_fields = ("name", "description")
+    list_display = ('name', 'price', 'status', 'owner', 'created_at')
+    list_filter = ('status', 'category', 'owner')
+    search_fields = ('name', 'description', 'owner__username')
+
+    def save_model(self, request, obj, form, change):
+        if not change:  # Если это создание нового объекта
+            obj.owner = request.user
+        super().save_model(request, obj, form, change)
