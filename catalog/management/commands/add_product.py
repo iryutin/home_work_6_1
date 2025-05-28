@@ -4,14 +4,14 @@ from catalog.models import Product, Category
 
 
 class Command(BaseCommand):
-    help = "Add test students to the database"
+    help = "Add test product to the database"
 
     def handle(self, *args, **kwargs):
         # Удаляем существующие записи
         Product.objects.all().delete()
         Category.objects.all().delete()
 
-        category, _ = Category.objects.get_or_create(name_category="Категория 1")
+        category, _ = Category.objects.get_or_create(name_category="Категория 1", slag = "Телефоны")
 
         product = [
             {

@@ -5,6 +5,7 @@ User = get_user_model()
 class Category(models.Model):
     name_category = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
+    slug = models.SlugField(max_length=100, unique=True, default='машинка')
 
     class Meta:
         verbose_name = "Категория"

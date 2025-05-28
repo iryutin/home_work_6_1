@@ -8,8 +8,12 @@ from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
-from catalog.models import Product
+from catalog.models import Product, Category
+from django.shortcuts import get_object_or_404
+from catalog.services import get_products_by_category
 
 class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
@@ -37,6 +41,7 @@ class ProductListView(ListView):
             queryset = queryset.exclude(status='draft')
         return queryset
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product_info.html'
@@ -72,7 +77,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         messages.error(self.request, 'Вы можете редактировать только свои продукты')
         return redirect('catalog:product_info', pk=self.kwargs.get('pk'))
 
-class ProductDeliteViev(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ProductDeliteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'product_delite.html'
     success_url = reverse_lazy('catalog:home')
@@ -104,3 +109,25 @@ class ProductUnpublishView(PermissionRequiredMixin, View):
     def handle_no_permission(self):
         messages.error(self.request, 'У вас нет прав на снятие с публикации')
         return redirect('catalog:product_info', pk=self.kwargs.get('pk'))
+
+class ProductsByCategoryView(ListView):
+    model = Category
+    template_name = 'catalog/products_by_category.html'
+    context_object_name = 'products'
+    paginate_by = 12
+
+    def get_queryset(self):
+        if 'category_slug' in self.kwargs:
+            self.current_category = get_object_or_404(Category, slag=self.kwargs['category_slug'])
+            return Product.objects.filter(
+                category=self.current_category,
+                status='published'
+            ).select_related('category')
+        return Product.objects.filter(status='published').select_related('category')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_categories'] = Category.objects.get()
+        if hasattr(self, 'current_category'):
+            context['current_category'] = self.current_category
+        return context
