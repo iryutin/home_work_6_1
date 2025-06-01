@@ -10,6 +10,7 @@ from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
+from django.core.cache import cache
 
 from catalog.models import Product, Category
 from django.shortcuts import get_object_or_404
@@ -36,9 +37,12 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        if not self.request.user.has_perm('catalog.can_unpublish_product'):
-            queryset = queryset.exclude(status='draft')
+        queryset = cache.get('my_queryset')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('my_queryset', queryset, 60 * 15)
+            if not self.request.user.has_perm('catalog.can_unpublish_product'):
+                queryset = queryset.exclude(status='draft')
         return queryset
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
@@ -110,24 +114,25 @@ class ProductUnpublishView(PermissionRequiredMixin, View):
         messages.error(self.request, 'У вас нет прав на снятие с публикации')
         return redirect('catalog:product_info', pk=self.kwargs.get('pk'))
 
-class ProductsByCategoryView(ListView):
+class ProductsByCategoryDetailView(DetailView):
     model = Category
-    template_name = 'catalog/products_by_category.html'
-    context_object_name = 'products'
-    paginate_by = 12
-
-    def get_queryset(self):
-        if 'category_slug' in self.kwargs:
-            self.current_category = get_object_or_404(Category, slag=self.kwargs['category_slug'])
-            return Product.objects.filter(
-                category=self.current_category,
-                status='published'
-            ).select_related('category')
-        return Product.objects.filter(status='published').select_related('category')
+    template_name = 'products_by_category.html'
+    context_object_name = 'product_by_category'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['all_categories'] = Category.objects.get()
-        if hasattr(self, 'current_category'):
-            context['current_category'] = self.current_category
+        cat_id = self.kwargs.get('pk')
+        context["category_products"] = get_products_by_category(cat_id)
         return context
+
+    def get_queryset(self):
+        queryset = cache.get('my_queryset')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('my_queryset', queryset, 60 * 15)  # Кешируем данные на 15 минут
+        return queryset
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'category.html'
+    context_object_name = 'categorys'

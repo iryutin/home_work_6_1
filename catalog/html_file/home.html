@@ -3,6 +3,19 @@
 {% block title %} Главная {% endblock %}
 {% block content %}
 {% include 'header.html' %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Категории</h5>
+    <p class="card-text">
+      <ul>
+                <li>
+                 <a href="{% url 'catalog:category_list' %}">Список категорий</a>
+                </li>
+
+      </ul>
+    </p>
+  </div>
+</div>
 <a href="{% url 'catalog:product_create' %}" class="btn btn-primary mb-3">Создать новый объект</a>
 <div class="album py-5 bg-body-tertiary">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

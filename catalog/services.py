@@ -2,9 +2,6 @@ from .models import Product, Category
 
 from catalog.models import Product
 
-def get_products_by_category(category):
+def get_products_by_category(category_pk):
     """Возвращает все продукты указанной категории"""
-    return Product.objects.filter(
-        category__slug=category,
-        status='published'  # Только опубликованные продукты
-    ).select_related('category', 'owner').order_by('-created_at')
+    return Product.objects.filter(category__pk=category_pk)

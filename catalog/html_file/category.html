@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %} Список категорий {% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="container mt-5">
+        <h1 class="mb-4">Список категорий</h1>
+        <ul class="list-group">
+            {% for category in categorys %}
+                <li class="list-group-item">
+                    <p>{{category.name_category}}</p>
+                    <a href="{% url 'catalog:products_by_category' category.pk %}" class="btn btn-primary">Полная информация</a>
+                    <p>{{category.description}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
